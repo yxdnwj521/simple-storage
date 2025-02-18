@@ -334,4 +334,5 @@ npx hardhat run scripts/interact.js --network local
 - 确保你的合约代码和测试代码没有语法错误。
 - 确保你的测试数据和预期结果是正确的。
 
-祝你好运！希望你能顺利使用这个项目！
+祝你好运！希望你能顺利使用这个项目！#   s i m p l e - s t o r a g e  
+ 
