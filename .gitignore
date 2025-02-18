@@ -1,17 +1,34 @@
-node_modules
+# 忽略 node_modules 目录
+node_modules/
+
+# 忽略环境变量文件
 .env
+.env.local
 
-# Hardhat files
-/cache
-/artifacts
+# 忽略 IDE 和编辑器生成的临时文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*.bak
 
-# TypeChain files
-/typechain
-/typechain-types
+# 忽略日志文件
+logs/
+*.log
 
-# solidity-coverage files
-/coverage
-/coverage.json
+# 忽略编译输出
+dist/
+build/
 
-# Hardhat Ignition default folder for deployments against a local node
-ignition/deployments/chain-31337
+# 忽略操作系统生成的文件
+.DS_Store
+Thumbs.db
+
+# 忽略 npm 缓存文件
+npm-debug.log*
+yarn-error.log*
+
+# 忽略其他临时文件
+*.tmp
+*.temp
