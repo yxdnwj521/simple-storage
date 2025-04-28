@@ -1,59 +1,141 @@
-### Node.js
-- **版本**: 16.x 或更高
-    - **下载命令**:
-      ```bash
-      sudo apt install nodejs
-      sudo apt install npm
-      npm install
-      ```
-- **检查是否安装**:
-    - 示例:
-      ```bash
-        node -v
-        npm -v
-      ```
-``
-**打开Ganache**:
-- 示例:
-- 点击QUICKSTART（这是快速部署，如果能看懂英文，可以试试NEW WORKPLACE）
-- 点击第一个账户（或者随便）
-- 点击右边的钥匙会出现两行奇怪的数字，双击下面那个然后Ctrl+c复制
-- 把它放到根目录的config.json和hardhat.config.js的YOUR_PRIVATE_KEY（记得config.json的密钥前面把0x去掉，另一个不用去掉）
-- 然后运行
-```bash
-    npx hardhat compile
-   ```
-来进行合约编译与部署 
-**部署合约到本地网络**:
-   ```bash
-   npx hardhat run scripts/deploy.js --network ganache
-   ```
-   输入上面命令的时候会有如下回复：
-   Deploying contracts with the account: YOUR_PRIVATE_KEY
-   SimpleStorage deployed to: YOUR_ADDRESS
-    下面那个是连接账户时的地址请填到main.go的大约在75行的YOUR_ADDRESS那儿。
-4. 
-## Go 应用程序
-Go 应用程序实现了HTTP服务器功能，允许用户通过API接口设置和获取存储于智能合约中的数据。
+# 简单存储项目
 
-### 运行Go服务
-首先需要加载配置文件（例如：config.json），其中包含私钥等敏感信息。
-然后启动Go HTTP服务器：
+## 项目简介
+
+这是一个基于以太坊区块链和Solidity智能合约的简单存储系统，能够通过区块链技术安全地存储和检索数据。项目包含智能合约和Go语言实现的HTTP接口服务。
+
+## 主要功能
+
+- 通过智能合约存储键值对数据
+- 通过HTTP接口查询存储的数据
+- 支持通过交易哈希查询历史数据
+
+## 环境要求
+
+- Node.js 16.x或更高版本
+- Go 1.24或更高版本
+- Ganache或Hardhat本地以太坊网络
+
+## 安装步骤
+
+### Windows环境
+
+1. 安装Git:
+
+```powershell
+winget install --id=Git.Git
+
+2. 安装Node.js:
+
+```powershell
+winget install --id=OpenJS.NodeJS
+
+3. 安装项目依赖:
+
+```powershell
+npm install
+```
+
+### Linux环境
+
+1. 安装基础工具:
+
+```bash
+sudo apt update
+sudo apt install -y git curl wget
+
+2. 安装Node.js:
+
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+source ~/.bashrc
+nvm install node
+
+3. 安装项目依赖:
+
+```bash
+npm install
+```
+
+## 配置环境
+
+1. 创建.env文件并添加私钥:
+
+```bash
+PRIVATE_KEY=YOUR_PRIVATE_KEY
+
+2. Windows设置环境变量:
+
+```powershell
+$env:PRIVATE_KEY = "YOUR_PRIVATE_KEY"
+
+3. Linux设置环境变量:
+
+```bash
+export PRIVATE_KEY=YOUR_PRIVATE_KEY
+```
+
+## 使用说明
+
+### 启动本地以太坊网络
+
+```bash
+npx hardhat node
+```
+
+### 编译合约
+
+```bash
+npx hardhat compile
+```
+
+### 部署合约
+
+```bash
+npx hardhat run scripts/deploy.js --network local
+```
+
+### 启动Go服务
+
 ```bash
 go run main.go
 ```
-现在，您可以访问以下API端点：
 
-- **设置键值对**:
-    - 方法: `POST /set?key=<key>&value=<value>`
-    - 示例: `curl "http://localhost:8080/set?key=1&value=HelloWorld"`
+### API接口
 
-- **读取键对应的值**:
-    - 方法: `GET /get?key=<key>`
-    - 示例: `curl "http://localhost:8080/get?key=1"`
-- **利用哈希值读取键对应的值**:
-    - 方法: `GET /get?BytxHash=<txHash>`
-    - 示例: `curl "http://localhost:8080/getByTxHash?txHash=YOUR_HSAH"
+- 设置数据: `POST /set?key=<key>&value=<value>`
+- 获取数据: `GET /get?key=<key>`
+- 通过交易哈希获取数据: `GET /getByTxHash?txHash=<txHash>`
 
-请根据实际情况调整上述URL及参数。
+## 项目结构
 
+```bash
+contracts/    # 智能合约文件
+scripts/     # 部署脚本
+test/        # 测试脚本
+main.go      # Go服务主程序
+
+## 常见问题
+
+### 无法连接到本地节点
+
+- 确保已启动Hardhat本地网络
+- 检查8545端口是否被占用
+
+### 缺少依赖项
+
+```bash
+npm cache clean --force
+rm -rf node_modules
+npm install
+```
+
+### 私钥错误
+
+- 确保.env文件中私钥格式正确
+- 检查私钥是否包含特殊字符
+
+### 测试失败
+
+- 检查合约和测试代码是否有语法错误
+- 确认测试数据正确性
